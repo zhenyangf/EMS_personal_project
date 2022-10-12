@@ -60,7 +60,7 @@ public class EmployeeServiceImplTest {
         employeeList = createEmployeeList(employee);
         employeeList1 = createEmployeeList1(employee);
         job = createJob(1L, "test", "test", employeeList1);
-        employeedao= createEmployeeDao(1L, "test2", "test2", "test2", 2L);
+        employeedao = createEmployeeDao(1L, "test2", "test2", "test2", 2L);
         employeeDAOList = createEmployeeDaoList(employeedao);
     }
 

@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -143,36 +142,37 @@ public class EmployeeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
         verify(employeeService, times(1)).deleteEmployeeById(anyLong());
     }
+
     @Test
     void testDeleteInvalidEmployee() throws Exception {
         Optional<EmployeeDAO> employeeDAO = Optional.of(createEmployee());
         employeeDAO.get().setId(null);
         when(employeeService.getEmployeeById(null)).thenReturn(employeeDAO);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-                .delete(URL + "/delete/4")
-                .content(asJsonString(employeeDAO))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .delete(URL + "/delete/4")
+                        .content(asJsonString(employeeDAO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         verify(employeeService, times(0)).deleteEmployeeById(null);
     }
+
     @Test
     void testUpdateEmployee() throws Exception {
         EmployeeDAO employee = createEmployee();
         Employee employee1 = createEmploye();
         when(employeeService.getEmployeeByIdNoDAO(employee.getId())).thenReturn(employee1);
 
-        ResultActions resultActions =mockMvc.perform(MockMvcRequestBuilders
-                .put(URL+"/update/1")
-                .content(asJsonString(employee))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                        .put(URL + "/update/1")
+                        .content(asJsonString(employee))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
 
                 .andExpect(status().isCreated());
-        verify(employeeService,times(1)).saveEmployee(employee);
+        verify(employeeService, times(1)).saveEmployee(employee);
 
     }
-
 
     private EmployeeDAO createEmployee() {
         EmployeeDAO employee = new EmployeeDAO();
@@ -192,7 +192,8 @@ public class EmployeeControllerTest {
         list.add(employee2);
         return list;
     }
-    private EmployeeUpdate createEmployeeUpdate(){
+
+    private EmployeeUpdate createEmployeeUpdate() {
         EmployeeUpdate employeeUpdate = new EmployeeUpdate();
         employeeUpdate.setId(1L);
         employeeUpdate.setName("test");
@@ -200,7 +201,8 @@ public class EmployeeControllerTest {
         employeeUpdate.setDob("test");
         return employeeUpdate;
     }
-    private Employee createEmploye(){
+
+    private Employee createEmploye() {
         Employee employee = new Employee();
         employee.setId(1L);
         employee.setName("test");

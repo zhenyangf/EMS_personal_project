@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,27 +29,40 @@ public class JobController {
     JobService jobService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<JobDAO>> findAllJobs(){
+    public ResponseEntity<List<JobDAO>> findAllJobs() {
         List<JobDAO> jobDAOList = jobService.getAllJobs();
-        if(jobDAOList.isEmpty()){
+        if (jobDAOList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(jobDAOList);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<JobDAO> findJobById(@NotNull @PathVariable Long id){
+    public ResponseEntity<JobDAO> findJobById(@NotNull @PathVariable Long id) {
         Optional<JobDAO> job = jobService.getJobById(id);
-        if(!job.isPresent()){
-            log.warn("Job with id {} not found.",id);
+        if (!job.isPresent()) {
+            log.warn("Job with id {} not found.", id);
+        } else {
+            log.debug("Job with id {} is found: {}", id, job);
         }
-        else{
-            log.debug("Job with id {} is found: {}", id,job);
-        }
-        return job.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+        return job.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @PostMapping("/add")
-    public ResponseEntity<JobDAO> saveJob(@RequestBody JobDAO jobDAO){
+    public ResponseEntity<JobDAO> saveJob(@RequestBody JobDAO jobDAO) {
         JobDAO jobSaved = jobService.saveJob(jobDAO);
         return new ResponseEntity<>(jobSaved, HttpStatus.CREATED);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteJobId(@PathVariable Long id) {
+        Optional<JobDAO> jobDAO = jobService.getJobById(id);
+        if (!(jobDAO.isPresent())) {
+            log.warn("Job for delete with id {} is not found.", id);
+            return ResponseEntity.notFound().build();
+        }
+        jobService.deleteJobById(id);
+        log.debug("Job with id {} is deleted: {}", id, jobDAO);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }

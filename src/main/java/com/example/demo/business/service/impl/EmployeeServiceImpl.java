@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Optional<EmployeeDAO> getEmployeeById(Long id) {
-        Optional <EmployeeDAO> employee= employeeRepository.findById(id).map(EmployeeMapper::toEmployeeDao);
+        Optional<EmployeeDAO> employee = employeeRepository.findById(id).map(EmployeeMapper::toEmployeeDao);
         return employee;
     }
 
@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDAO> getAllEmployees() {
         List<Employee> employeeDAOS = employeeRepository.findAll();
-        if(employeeDAOS.isEmpty()){
+        if (employeeDAOS.isEmpty()) {
             throw new HttpClientErrorException(HttpStatus.NO_CONTENT);
         }
         List<EmployeeDAO> employeeDAOList = employeeRepository.findAll().stream().map(EmployeeMapper::toEmployeeDao).collect(Collectors.toList());

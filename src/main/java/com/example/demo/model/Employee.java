@@ -27,7 +27,7 @@ public class Employee {
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name="date_of_birth")
+    @Column(name = "date_of_birth")
     private String dob;
     @ManyToOne(fetch = FetchType.LAZY)
     private Job job;
