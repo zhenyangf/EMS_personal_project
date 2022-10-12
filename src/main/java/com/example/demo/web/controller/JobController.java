@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.web.controller;
 
 import com.example.demo.business.repository.JobRepository;
 import com.example.demo.business.repository.model.JobDAO;

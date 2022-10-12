@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Job job = jobService.getJobByIdNoDAO(newEmployee.getJob_id());
         Employee saveEmployee = EmployeeMapper.toSaveEmployee(newEmployee, job);
         if (saveEmployee.getJob() == null) {
-            System.out.println("no job existing");
+
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
         employeeRepository.save(saveEmployee);

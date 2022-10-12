@@ -45,7 +45,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public void deleteJobById(Long id) {
-
+        jobRepository.deleteById(id);
     }
     @Override
     public Job getJobByIdNoDAO(Long id) {

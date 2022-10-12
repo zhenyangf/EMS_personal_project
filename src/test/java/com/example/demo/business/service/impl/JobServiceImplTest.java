@@ -17,9 +17,13 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -54,13 +58,31 @@ public class JobServiceImplTest {
         when(jobRepository.findAll()).thenReturn(jobs);
         List <JobDAO> jobs = jobService.getAllJobs();
         assertEquals(2,jobs.size());
-        verify(jobRepository, times(1)).findAll();
+        verify(jobRepository, times(2)).findAll();
     }
     @Test
     void testFindAllJobsInvalid() throws Exception{
         when(jobRepository.findAll()).thenReturn(Collections.emptyList());
         assertThrows(HttpClientErrorException.class,()-> jobService.getAllJobs());
     }
+    @Test
+    void testFindJobById() throws Exception{
+        given(jobRepository.findById(anyLong())).willReturn(Optional.of(job1));
+
+        final Optional<JobDAO> expected = jobService.getJobById(anyLong());
+        assertTrue(expected.isPresent());
+        assertEquals(expected,Optional.of(jobDAO));
+        verify(jobRepository,times(1)).findById(anyLong());
+    }
+    @Test
+    void testFindJobByIdNoDAO() throws Exception{
+        given(jobRepository.findById(anyLong())).willReturn(Optional.ofNullable(job1));
+
+        Job expected = jobService.getJobByIdNoDAO(anyLong());
+        assertEquals(expected,job1);
+        verify(jobRepository,times(1)).findById(anyLong());
+    }
+
     @Test
     void testSaveJob() throws Exception{
         when(jobRepository.save(job1)).thenReturn(job1);
@@ -69,6 +91,11 @@ public class JobServiceImplTest {
         assertEquals(job1.getSalary(),jobsaved.getSalary());
         assertEquals(job1.getId(),jobsaved.getId());
         verify(jobRepository,times(1)).save(job1);
+    }
+    @Test
+    void testDeleteJob() throws Exception{
+        jobService.deleteJobById(anyLong());
+        verify(jobRepository,times(1)).deleteById(anyLong());
     }
 
 
