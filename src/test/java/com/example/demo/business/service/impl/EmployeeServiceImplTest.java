@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeServiceImplTest {
+class EmployeeServiceImplTest {
     @Mock
     private EmployeeRepository employeeRepository;
     @Mock

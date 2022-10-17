@@ -13,7 +13,7 @@ public class EmployeeMapper {
                 .name(employee.getName())
                 .surname(employee.getSurname())
                 .dob(employee.getDob())
-                .job_id(employee.getJob().getId())
+                .jobId(employee.getJob().getId())
                 .build();
     }
 

@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class JobServiceImplTest {
+class JobServiceImplTest {
     @Mock
     private JobRepository jobRepository;
     @InjectMocks

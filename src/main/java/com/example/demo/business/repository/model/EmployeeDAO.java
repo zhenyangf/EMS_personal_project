@@ -14,6 +14,6 @@ public class EmployeeDAO {
     private String name;
     private String surname;
     private String dob;
-    private Long job_id;
+    private Long jobId;
 
 }
