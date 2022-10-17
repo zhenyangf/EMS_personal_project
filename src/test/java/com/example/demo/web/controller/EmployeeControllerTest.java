@@ -1,7 +1,6 @@
 package com.example.demo.web.controller;
 
 import com.example.demo.business.repository.model.EmployeeDAO;
-import com.example.demo.business.repository.model.EmployeeUpdate;
 import com.example.demo.business.service.EmployeeService;
 import com.example.demo.model.Employee;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -118,21 +117,6 @@ public class EmployeeControllerTest {
         verify(employeeService, times(1)).saveEmployee(employeeDAO);
     }
 
-    //    @Test
-//    void testSaveEmployeeInvalid() throws Exception{
-//        EmployeeDAO employeeDAO = createEmployee();
-//        employeeDAO.setDob(null);
-//        Employee employee = new Employee();
-//
-//        when(employeeService.saveEmployee(employeeDAO)).thenReturn(employee);
-//        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
-//                        .post(URL+"/add")
-//                        .content(asJsonString(employeeDAO))
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().is4xxClientError());
-//        verify(employeeService,times(0)).saveEmployee(employeeDAO);
-//    }
     @Test
     void testDeleteEmployee() throws Exception {
         Optional<EmployeeDAO> employeeDAO = Optional.of(createEmployee());
@@ -191,15 +175,6 @@ public class EmployeeControllerTest {
         list.add(employee1);
         list.add(employee2);
         return list;
-    }
-
-    private EmployeeUpdate createEmployeeUpdate() {
-        EmployeeUpdate employeeUpdate = new EmployeeUpdate();
-        employeeUpdate.setId(1L);
-        employeeUpdate.setName("test");
-        employeeUpdate.setSurname("test");
-        employeeUpdate.setDob("test");
-        return employeeUpdate;
     }
 
     private Employee createEmploye() {

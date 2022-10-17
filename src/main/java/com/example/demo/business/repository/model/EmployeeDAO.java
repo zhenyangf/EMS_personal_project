@@ -1,7 +1,6 @@
 package com.example.demo.business.repository.model;
 
 import lombok.AllArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
