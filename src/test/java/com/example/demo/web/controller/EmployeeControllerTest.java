@@ -1,5 +1,6 @@
 package com.example.demo.web.controller;
 
+import com.example.demo.business.repository.EmployeeRepository;
 import com.example.demo.business.repository.model.EmployeeDAO;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
@@ -40,10 +41,13 @@ public class EmployeeControllerTest {
     @Autowired
     private JobController jobController;
     @MockBean
+    private EmployeeRepository employeeRepository;
+    @MockBean
     private EmployeeService employeeService;
 
     private EmployeeDAO employeeDAO1 = createEmployee();
     private List<EmployeeDAO> employeeDAOList1 = createEmployeeList();
+    private List<Employee> employeeList = createEmployeesList();
 
     public static String asJsonString(final Object obj) {
         try {
@@ -59,11 +63,23 @@ public class EmployeeControllerTest {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/all"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("test"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].surname").value("test"))
                 .andExpect(status().isOk());
         verify(employeeService, times(1)).getAllEmployees();
+
+    }
+    @Test
+    void testFindAllEmployeesRepository() throws Exception {
+        when(employeeRepository.findAll()).thenReturn(employeeList);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/all")
+                        .content(new ObjectMapper().writeValueAsString(employeeList)).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("test"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].surname").value("test"))
+                .andExpect(status().isOk());
+        verify(employeeRepository, times(1)).findAll();
 
     }
 
@@ -184,5 +200,13 @@ public class EmployeeControllerTest {
         employee.setSurname("test");
         employee.setDob("test");
         return employee;
+    }
+    private List<Employee> createEmployeesList(){
+        List<Employee> list = new ArrayList<>();
+        Employee employee1 = createEmploye();
+        Employee employee2 = createEmploye();
+        list.add(createEmploye());
+        list.add(createEmploye());
+        return list;
     }
 }
