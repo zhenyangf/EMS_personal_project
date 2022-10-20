@@ -70,18 +70,7 @@ public class EmployeeControllerTest {
         verify(employeeService, times(1)).getAllEmployees();
 
     }
-    @Test
-    void testFindAllEmployeesRepository() throws Exception {
-        when(employeeRepository.findAll()).thenReturn(employeeList);
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/all")
-                        .content(new ObjectMapper().writeValueAsString(employeeList)).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("test"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].surname").value("test"))
-                .andExpect(status().isOk());
-        verify(employeeRepository, times(1)).findAll();
 
-    }
 
     @Test
     void testFindAllEmployeesInvalid() throws Exception {
