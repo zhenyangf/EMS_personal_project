@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -14,13 +16,15 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class EmployeeDAO {
     private Long id;
-    @NotBlank(message = "Name shouldn't be blank")
-    @NotNull(message = "name shouldnt be null")
+    @NotEmpty
+    @NonNull
     private String name;
-    @NotBlank(message = "Surname shouldn't be blank")
+    @NotEmpty
+    @NonNull
     private String surname;
     private String dob;
-    @NotNull(message = "Job Id required")
+    @NotEmpty
+    @NonNull
     private Long jobId;
 
 }

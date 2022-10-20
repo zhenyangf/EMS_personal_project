@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerTest {
     public static String URL = "http://localhost:8080/api";
 
+
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -116,6 +117,21 @@ public class EmployeeControllerTest {
                 .andExpect(status().isCreated());
         verify(employeeService, times(1)).saveEmployee(employeeDAO);
     }
+//    @Test
+//    void testSaveEmployeeInvalid() throws Exception {
+//        EmployeeDAO employeeDAO = createEmployeeInvalid();
+//
+//        Employee employee = new Employee();
+//
+//        when(employeeService.saveEmployee(employeeDAO)).thenReturn(employee);
+//        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+//                        .post(URL + "/add")
+//                        .content(asJsonString(employeeDAO))
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest());
+//        verify(employeeService, times(1)).saveEmployee(employeeDAO);
+//    }
 
     @Test
     void testDeleteEmployee() throws Exception {
@@ -167,6 +183,7 @@ public class EmployeeControllerTest {
         employee.setJobId(1L);
         return employee;
     }
+
 
     private List<EmployeeDAO> createEmployeeList() {
         List<EmployeeDAO> list = new ArrayList<>();
