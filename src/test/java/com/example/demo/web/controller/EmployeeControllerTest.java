@@ -1,10 +1,11 @@
 package com.example.demo.web.controller;
 
 import com.example.demo.business.repository.model.EmployeeDAO;
-import com.example.demo.business.service.EmployeeService;
 import com.example.demo.model.Employee;
+import com.example.demo.service.EmployeeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -164,7 +165,6 @@ public class EmployeeControllerTest {
         employee.setName("test");
         employee.setSurname("test");
         employee.setDob("test");
-        employee.setJob_id(1L);
         return employee;
     }
 

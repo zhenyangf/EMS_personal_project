@@ -1,4 +1,4 @@
-package com.example.demo.business.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.business.repository.EmployeeRepository;
 import com.example.demo.business.repository.JobRepository;
@@ -36,9 +36,9 @@ class EmployeeServiceImplTest {
     @Mock
     private JobRepository jobRepository;
     @InjectMocks
-    private EmployeeServiceImpl employeeService;
+    private EmployeeService employeeService;
     @InjectMocks
-    private JobServiceImpl jobService;
+    private JobService jobService;
 
     private EmployeeDAO employeedao;
     private Employee employee;
@@ -109,7 +109,6 @@ class EmployeeServiceImplTest {
         employeedao.setName(name);
         employeedao.setSurname(surname);
         employeedao.setDob(dob);
-        employeedao.setJob_id(job_id);
         return employeedao;
     }
 

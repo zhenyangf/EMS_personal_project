@@ -1,10 +1,9 @@
 package com.example.demo.web.controller;
 
-import com.example.demo.business.repository.model.EmployeeDAO;
 import com.example.demo.business.repository.model.JobDAO;
-import com.example.demo.business.service.EmployeeService;
-import com.example.demo.business.service.JobService;
 import com.example.demo.model.Job;
+import com.example.demo.service.EmployeeService;
+import com.example.demo.service.JobService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

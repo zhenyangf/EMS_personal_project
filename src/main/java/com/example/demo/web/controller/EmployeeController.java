@@ -2,8 +2,8 @@ package com.example.demo.web.controller;
 
 import com.example.demo.business.repository.EmployeeRepository;
 import com.example.demo.business.repository.model.EmployeeDAO;
-import com.example.demo.business.service.EmployeeService;
 import com.example.demo.model.Employee;
+import com.example.demo.service.EmployeeService;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -51,8 +51,7 @@ public class EmployeeController {
         Optional<EmployeeDAO> employee = employeeService.getEmployeeById(id);
         if (!employee.isPresent()) {
             log.warn("Employee with id {} not found.", id);
-        } else {
-            log.debug("Employee with id {} is found: {}", id, employee);
+            return ResponseEntity.notFound().build();
         }
         return employee.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -61,10 +60,10 @@ public class EmployeeController {
     public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody EmployeeDAO employee, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             log.error("Employee not created: error {}", bindingResult);
-            return ResponseEntity.badRequest().build();
         }
-        Employee employeeSaved = employeeService.saveEmployee(employee);
-        return new ResponseEntity<>(employeeSaved, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
+
 
     }
 

@@ -2,7 +2,7 @@ package com.example.demo.web.controller;
 
 import com.example.demo.business.repository.JobRepository;
 import com.example.demo.business.repository.model.JobDAO;
-import com.example.demo.business.service.JobService;
+import com.example.demo.service.JobService;
 import com.sun.istack.NotNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

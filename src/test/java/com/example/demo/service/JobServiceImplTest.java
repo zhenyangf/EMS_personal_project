@@ -1,4 +1,4 @@
-package com.example.demo.business.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.business.repository.JobRepository;
 import com.example.demo.business.repository.model.JobDAO;
@@ -32,7 +32,7 @@ class JobServiceImplTest {
     @Mock
     private JobRepository jobRepository;
     @InjectMocks
-    private JobServiceImpl jobService;
+    private JobService jobService;
 
     private Job job1;
     private Job job2;
