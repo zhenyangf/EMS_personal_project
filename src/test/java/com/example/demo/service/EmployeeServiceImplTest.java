@@ -72,28 +72,25 @@ class EmployeeServiceImplTest {
         verify(employeeRepository, times(2)).findAll();
     }
 
-    @Test
-    void testFindAllEmployeesInvalid() throws Exception {
-        when(employeeRepository.findAll()).thenReturn(Collections.emptyList());
-        assertThrows(HttpClientErrorException.class, () -> employeeService.getAllEmployees());
-    }
+
 
     @Test
     void testFindEmployeeById() throws Exception {
         given(employeeRepository.findById(anyLong())).willReturn(Optional.of(employee));
 
-        final Optional<EmployeeDAO> expected = employeeService.getEmployeeById(anyLong());
+        Optional<EmployeeDAO> expected = employeeService.getEmployeeById(anyLong());
         assertTrue(expected.isPresent());
-        assertEquals(expected, Optional.of(employeedao));
+        assertEquals(expected.get().getName(), employeedao.getName());
+        assertEquals(expected.get().getSurname(), employeedao.getSurname());
         verify(employeeRepository, times(1)).findById(anyLong());
     }
 
     @Test
     void testSaveEmployee() throws Exception {
-        when(employeeRepository.save(employee)).thenReturn(employee);
+        when(employeeService.saveEmployee(employeedao)).thenReturn(employee);
         Employee returned = employeeService.saveEmployee(employeedao);
         assertEquals(returned.getName(), employee2.getName());
-        verify(employeeRepository, times(1)).save(employee);
+        verify(employeeService, times(1)).saveEmployee(employeedao);
     }
 
     @Test

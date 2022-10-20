@@ -49,13 +49,7 @@ public class EmployeeControllerTest {
     private List<EmployeeDAO> employeeDAOList1 = createEmployeeList();
     private List<Employee> employeeList = createEmployeesList();
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     @Test
     void testFindAllEmployees() throws Exception {
@@ -63,7 +57,7 @@ public class EmployeeControllerTest {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/all"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("test"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].surname").value("test"))
                 .andExpect(status().isOk());
@@ -170,6 +164,7 @@ public class EmployeeControllerTest {
         employee.setName("test");
         employee.setSurname("test");
         employee.setDob("test");
+        employee.setJobId(1L);
         return employee;
     }
 
@@ -197,5 +192,12 @@ public class EmployeeControllerTest {
         list.add(createEmploye());
         list.add(createEmploye());
         return list;
+    }
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
